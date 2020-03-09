@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>首页-投资日记</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.bootcss.com/bulma/0.6.1/css/bulma.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f8f8;
+        }
+        .tag.is-lightblue {
+            color: #2d84cc;
+            background: #ebf3fb;
+        }
+        .ml-10 {
+            margin-left: 1rem;
+        }
+        .lh-20 {
+            line-height: 2rem;
+        }
+        .card {
+            margin-bottom: 1rem;
+        }
+        .section {
+            padding-top: 1rem;
+        }
+        .fa-15 {
+            font-size: 1.5rem;
+        }
+        .fa.fa-fire {
+            font-size: 1.2rem;
+            color: red;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body >
+        <div class="navbar has-shadow">
+                <div class="container">
+                    <div class="navbar-menu">
+                        <div class="navbar-start">
+                            <a class="navbar-item" href="./index.html">首页</a>
+                            <!--<a class="navbar-item" href="http://stock.eastmoney.com/a/cgszb.html" target="_blank">股市直播</a>-->
+                            <!--<a class="navbar-item" href="http://finance.sina.com.cn/roll/index.d.html?cid=56589&page=1" target="_blank">股市及时雨</a>-->
+                            <!--<a class="navbar-item" href="http://stock.hexun.com/" target="_blank">和讯股评</a>-->
+                            <!--<a class="navbar-item" href="http://stock.jrj.com.cn/jyts/" target="_blank">交易提示</a>-->
+                            <!--<a class="navbar-item" href="http://vip.stock.finance.sina.com.cn/moneyflow/" target="_blank">资金流向</a>-->
+                            <!--<a class="navbar-item" href="https://xuangubao.cn/dingpan" target="_blank">智能盯盘</a>-->
+                            <!--<a class="navbar-item" href="/topic">话题</a>-->
+                            <a class="navbar-item" href="/stock/list">自选股</a>
+                            <a class="navbar-item" href="/invest/list">持仓</a>
+            
+                            <div class="navbar-item">
+                                <form action="/article/publish" method="get" target="_blank">
+                                    <div class="field is-grouped">
+            
+                                        <div class="control has-icons-right">
+                                            <input type="text" class="input" name="title" style="width: 20rem;" placeholder="搜索你感兴趣的内容...">
+                                            <span class="icon is-right">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                        </div>
+                                        <div class="control">
+                                            <input type="submit" class="button is-info" value="写心得">
+                                        </div>
+            
+                                        <!--<div class="control">-->
+                                            <!--<a class="button is-info" href="/stock/add" target="_blank">添加自选股</a>-->
+                                        <!--</div>-->
+                                        <!--<div class="control">-->
+                                            <!--<a class="button is-info" href="/invest/add" target="_blank">交易</a>-->
+                                            <!--&lt;!&ndash;<a class=" is-info" href="/stock/add" target="_blank">卖出股票</a>&ndash;&gt;-->
+                                        <!--</div>-->
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="navbar-item">
+                                <div class="control">
+                                    <a class="button is-info" href="/article/add_url" target="_blank">写摘抄</a>
+                                </div>
+                            </div>
+                            <div class="navbar-item">
+                                <div class="control">
+                                    <a class="button is-info" href="/stock/add" target="_blank">添加自选股</a>
+                                </div>
+                            </div>
+                            <div class="navbar-item">
+                                <div class="control">
+                                <a class="button is-info" href="/invest/add" target="_blank">买入股票</a>
+                                <!--<a class=" is-info" href="/stock/sell" target="_blank">卖出股票</a>-->
+                                </div>
+            
+                            </div>
+                            <div class="navbar-item">
+                                <div class="control">
+                                    <!--<a class="button is-info" href="/invest/add" target="_blank">买入股票</a>-->
+                                    <a class="button is-info" href="/invest/sell" target="_blank">卖出股票</a>
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="navbar-end">
+                            <a href="#" class="navbar-item">
+                                <i class="fa fa-15 fa-bell"></i>
+                            </a>
+                            <a href="#" class="navbar-item">
+                                <i class="fa fa-15 fa-comments"></i>
+                            </a>
+                            <a href="#" class="navbar-item">
+                                <img src="https://bulma.io/images/placeholders/128x128.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<div class="layui-body1">
+    <!--<link rel="stylesheet" href="https://static.zhihu.com/static/revved/-/css/z.3e5da9dd.css">-->
+    <link href="./css/stock.css" rel="stylesheet" type="text/css"/>
+    <div class="navbar has-shadow" style="position: relative; top: 1px;">
+        <div class="container">
+            <div class="navbar-tabs">
+                <a href="/" class="navbar-item is-tab is-active">综合</a>
+                <a th:href="${'/topic/'+item.title}" th:each="item:${tags}" class="navbar-item is-tab"
+                   th:text="${item.title}">用户</a>
+                <!--<a href="#" class="navbar-item is-tab">话题</a>-->
+                <!--<a href="#" class="navbar-item is-tab">专栏</a>-->
+                <!--<a href="#" class="navbar-item is-tab">Live</a>-->
+                <!--<a href="#" class="navbar-item is-tab">私家课</a>-->
+                <!-- <a href="javascript:;" onclick="open53()" class="navbar-item is-tab">联系客服</a> -->
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="tile">
+                <div class="tile is-vertical is-parent is-8">
+                    <div class="box" >
+
+                        <div class="media">
+                            <div class="stock_info" id="shangzheng">
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td class="col_1" style="width: 150px;">
+                                            <h1 class="name">
+                                                <a href="javascript:;" class="sname">上证指数</a>
+                                                <span>(<a href="javascript:;" class="scode">000001</a>)</span>
+                                            </h1>
+                                        </td>
+                                        <td class="col_2">
+                                            <div class="stock_detail">
+                                                <table style="width:715px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="price">
+                                                            <span class="price_arrow "><strong
+                                                                    class=" curr_price">--</strong></span>
+                                                            <em class=" curr_updown">0.00</em><br>
+                                                            <em class=" curr_percent">0.00%</em>
+                                                        </td>
+                                                        <td>今开：<strong class=" open">--</strong><br>
+                                                            昨收：<strong class=" yestclose">--</strong>
+                                                        </td>
+                                                        <td>最高：<strong class=" high">--</strong><br>
+                                                            最低：<strong class=" low">--</strong></td>
+                                                        <td>成交量：<strong class="volume">0万手</strong><br>
+                                                            成交额：<strong class="turnover">0亿</strong>
+                                                        </td>
+                                                        <td>量比：<strong class="liangbi">0</strong><br>
+                                                            振 幅：<strong class="cRed zhenfu">--</strong>
+                                                        </td>
+
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5">
+                                                <img src="http://image.sinajs.cn/newchart/min/n/sh000001.gif" id="shangImg" />
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div>
+                                
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="stock_info" id="shencheng">
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td class="col_1" style="width: 150px;">
+                                            <h1 class="name">
+                                                <a href="javascript:;" class="sname">上证指数</a>
+                                                <span>(<a href="javascript:;" class="scode">000001</a>)</span>
+                                            </h1>
+                                        </td>
+                                        <td class="col_2">
+                                            <div class="stock_detail">
+                                                <table style="width:715px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="price">
+                                                            <span class="price_arrow "><strong
+                                                                    class=" curr_price">--</strong></span>
+                                                            <em class=" curr_updown">0.00</em><br>
+                                                            <em class=" curr_percent">0.00%</em>
+                                                        </td>
+                                                        <td>今开：<strong class=" open">--</strong><br>
+                                                            昨收：<strong class=" yestclose">--</strong>
+                                                        </td>
+                                                        <td>最高：<strong class=" high">--</strong><br>
+                                                            最低：<strong class=" low">--</strong></td>
+                                                        <td>成交量：<strong class="volume">0万手</strong><br>
+                                                            成交额：<strong class="turnover">0亿</strong>
+                                                        </td>
+                                                        <td>量比：<strong class="liangbi">0</strong><br>
+                                                            振 幅：<strong class="cRed zhenfu">--</strong>
+                                                        </td>
+
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="stock_info" id="cyb">
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td class="col_1" style="width: 150px;">
+                                            <h1 class="name">
+                                                <a href="javascript:;" class="sname">上证指数</a>
+                                                <span>(<a href="javascript:;" class="scode">000001</a>)</span>
+                                            </h1>
+                                        </td>
+                                        <td class="col_2">
+                                            <div class="stock_detail">
+                                                <table style="width:715px">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="price">
+                                                            <span class="price_arrow "><strong
+                                                                    class=" curr_price">--</strong></span>
+                                                            <em class=" curr_updown">0.00</em><br>
+                                                            <em class=" curr_percent">0.00%</em>
+                                                        </td>
+                                                        <td>今开：<strong class=" open">--</strong><br>
+                                                            昨收：<strong class=" yestclose">--</strong>
+                                                        </td>
+                                                        <td>最高：<strong class=" high">--</strong><br>
+                                                            最低：<strong class=" low">--</strong></td>
+                                                        <td>成交量：<strong class="volume">0万手</strong><br>
+                                                            成交额：<strong class="turnover">0亿</strong>
+                                                        </td>
+                                                        <td>量比：<strong class="liangbi">0</strong><br>
+                                                            振 幅：<strong class="cRed zhenfu">--</strong>
+                                                        </td>
+
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box" style="display: none;">
+                        <div class="media">
+                            <ul class="zm-topic-cat-main js-topic-cat-main clearfix">
+
+                                <li th:each="item:${tags}" class="zm-topic-cat-item"><a
+                                        th:href="${'/topic/'+item.title}" th:text="${item.title}">互联网</a></li>
+
+
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="box">
+                        <div class="media" th:each="item:${dynamics}">
+                            <div class="media-content">
+                                <div class="content">
+                                    <p><a th:href="${item.url}" target="_blank"><strong th:text="${item.title}">协程的好处有哪些？</strong></a><a
+                                            th:href="${'/topic/'+item.tags}">【<span th:text="${item.tags}"></span>】</a>
+                                    </p>
+                                    <p th:text="${item.content}"><strong>阿猫：</strong>没有啥复杂的东西，考虑清楚需求，就可以很自然的衍生出这些解决方案。
+                                    </p>
+                                    <p>
+                                        <a class="tag is-medium is-lightblue has-addons">
+                                            <i class="fa fa-caret-up"></i>
+                                            <span class="icon is-medium" th:text="${item.numZan}">763</span>
+                                        </a>
+                                        <a class="tag is-medium is-lightblue">
+                                            <i class="fa fa-caret-down"></i>
+                                        </a>
+                                        <a href="#" class="ml-10">
+                                            <i class="fa fa-comment"></i>
+                                            <span><b th:text="${item.numPing}">38</b> 条评论</span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tile is-vertical is-parent">
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="card-header-title">账户信息</p>
+                        </div>
+                        <div class="card-content">
+                            <!--<div class="media">-->
+                                <!--<div class="media-left">-->
+                                    <!--<figure class="image is-64x64">-->
+                                        <!--<img src="https://bulma.io/images/placeholders/128x128.png" alt="">-->
+                                    <!--</figure>-->
+                                <!--</div>-->
+                                <!--<div class="media-content">-->
+                                    <!--<p>-->
+                                        <!--<strong>线程内上下文切换</strong>-->
+                                        <!--<span class="tag is-gray">专栏</span></p>-->
+                                    <!--<p>-->
+                                        <!--1.6K 关注 | 12 篇文章-->
+                                    <!--</p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="media">
+
+                                <div class="media-content">
+                                    <p>
+                                        <span class="tag is-gray">资金总额</span>
+                                        <strong id="capitalTotal">--</strong>
+                                    </p>
+                                    <p>
+                                        <span class="tag is-gray">投资总额</span>
+                                        <strong id="investAmount">--</strong>
+                                    </p>
+                                    <p>
+                                        <span class="tag is-gray">累积收益</span>
+                                        <strong id="incomeAmount">--</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="card-header-title">相关链接</p>
+                        </div>
+                        <div class="card-content">
+                            <ul class="lh-20">
+                                <li><a href="http://stock.eastmoney.com/a/cgszb.html" target="_blank">股市直播</a><i
+                                        class="fa fa-fire"></i></li>
+                                <li><a href="http://finance.sina.com.cn/roll/index.d.html?cid=56589&page=1"
+                                       target="_blank">股市及时雨</a><i class="fa fa-fire"></i></li>
+                                <li><a href="http://stock.hexun.com/" target="_blank">和讯股评</a><i class="fa fa-fire"></i>
+                                </li>
+                                <li><a href="http://stock.jrj.com.cn/jyts/" target="_blank">交易提示</a></li>
+                                <li><a href="http://vip.stock.finance.sina.com.cn/moneyflow/" target="_blank">资金流向</a>
+                                </li>
+                                <li><a href="https://xuangubao.cn/dingpan" target="_blank">智能盯盘</a></li>
+                                <li><a href="#">琅琊榜2</a></li>
+                                <li><a href="#">刘昊然</a></li>
+                                <li><a href="#">黄轩</a></li>
+                                <li><a href="#">比特币</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- container -->
+    </div>
+    <script src="https://img.highcharts.com.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="http://qt.gtimg.cn/q=sh000001"></script>
+    <script type="text/javascript" src="http://qt.gtimg.cn/q=sz399001"></script>
+    <script type="text/javascript" src="http://qt.gtimg.cn/q=sz399006"></script>
+    <div ></div>
+    <script>
+        //腾讯股票数据处理
+        function gtimg(obj, ecode, name, data) {
+            $(obj).find('.sname').text(name);
+            $(obj).find('.scode').text(ecode);
+            //涨跌幅
+            var percent = parseFloat(data[32]);
+            // alert(percent);
+            if (percent > 0) {
+                $(obj).find(".curr_percent").addClass("cRed");
+                $(obj).find(".curr_percent").removeClass("cGreen");
+                $(obj).find(".curr_percent").text(percent.toFixed(2) + "%");
+            } else {
+                $(obj).find(".curr_percent").addClass("cGreen");
+                $(obj).find(".curr_percent").removeClass("cRed");
+                $(obj).find(".curr_percent").text(percent.toFixed(2) + "%");
+            }
+            //当前价格
+            var price = parseFloat(data[3]);
+            if (percent > 0) {
+                $(obj).find(".curr_price").addClass("cRed");
+                $(obj).find(".curr_price").removeClass("cGreen");
+                $(obj).find(".curr_price").text(price.toFixed(2));
+                $(obj).find(".curr_price").parent().removeClass("down");
+                $(obj).find(".curr_price").parent().addClass("up");
+            } else {
+                $(obj).find(".curr_price").addClass("cGreen");
+                $(obj).find(".curr_price").removeClass("cRed");
+                $(obj).find(".curr_price").text(price.toFixed(2));
+                $(obj).find(".curr_price").parent().removeClass("up");
+                $(obj).find(".curr_price").parent().addClass("down");
+            }
+
+            //涨跌金额
+            var updown = data[31];
+            if (updown > 0) {
+                $(obj).find(".curr_updown").addClass("cRed");
+                $(obj).find(".curr_updown").removeClass("cGreen");
+                $(obj).find(".curr_updown").text(updown);
+            } else {
+                $(obj).find(".curr_updown").addClass("cGreen");
+                $(obj).find(".curr_updown").removeClass("cRed");
+                $(obj).find(".curr_updown").text(updown);
+            }
+
+            //今开
+            var open = data[5];
+            if (percent > 0) {
+                $(obj).find(".open").addClass("cRed");
+                $(obj).find(".open").removeClass("cGreen");
+                $(obj).find(".open").text(open);
+            } else {
+                $(obj).find(".open").addClass("cGreen");
+                $(obj).find(".open").removeClass("cRed");
+                $(obj).find(".open").text(open);
+            }
+            //昨收
+            var yestclose = data[4];
+            if (percent > 0) {
+                $(obj).find(".yestclose").addClass("cRed");
+                $(obj).find(".yestclose").removeClass("cGreen");
+                $(obj).find(".yestclose").text(yestclose);
+            } else {
+                $(obj).find(".yestclose").addClass("cGreen");
+                $(obj).find(".yestclose").removeClass("cRed");
+                $(obj).find(".yestclose").text(yestclose);
+            }
+
+            //最高
+            var high = data[33];
+            if (percent > 0) {
+                $(obj).find(".high").addClass("cRed");
+                $(obj).find(".high").removeClass("cGreen");
+                $(obj).find(".high").text(high);
+            } else {
+                $(obj).find(".high").addClass("cGreen");
+                $(obj).find(".high").removeClass("cRed");
+                $(obj).find(".high").text(open);
+            }
+            //最低
+            var low = data[34];
+            if (percent > 0) {
+                $(obj).find(".low").addClass("cRed");
+                $(obj).find(".low").removeClass("cGreen");
+                $(obj).find(".low").text(low);
+            } else {
+                $(obj).find(".low").addClass("cGreen");
+                $(obj).find(".low").removeClass("cRed");
+                $(obj).find(".low").text(low);
+            }
+
+            //成交量
+            var volume = parseFloat(data[36]);
+            $(obj).find(".volume").text((volume / 10000).toFixed(2) + "万手")
+
+            //成交额
+            var turnover = parseFloat(data[37]);
+            // alert(data[37])
+            $(obj).find(".turnover").text((turnover / 10000).toFixed(2) + "亿");
+
+            //量比
+            var liangbi = data[49];
+            $(obj).find(".liangbi").text(liangbi);
+            // alert(liangbi);
+
+            //振幅zhenfu
+            var zhenfu = data[43];
+            $(obj).find(".zhenfu").text(zhenfu + "%");
+           
+            // console.log("更新股票信息END")
+        }
+
+        function insertStr(soure, start, newStr) {
+            return soure.slice(0, start) + newStr + soure.slice(start);
+        }
+
+        function getSH(){
+            // console.log("更新上证指数")
+            $.get('http://qt.gtimg.cn/q=sh000001',function(idd){
+                eval(idd);
+                
+                // console.log(idd);
+                // console.log(v_sh000001.split('~'))
+                gtimg($("#shangzheng"), 'sh000001', '上证指数', v_sh000001.split('~'));
+            })
+            // document.getElementById("stockLine").src = "http://qt.gtimg.cn/q=sh000001"
+            // document.write('<script type="text/javascript" src="http://qt.gtimg.cn/q=sh000001"><\/script>'); 
+            // gtimg($("#shangzheng"), 'sh000001', '上证指数', v_sh000001.split('~'));
+        }
+
+        function getSHimg(){
+            console.log("更新上证指数分时图")
+            $("#shangImg").attr("src","http://image.sinajs.cn/newchart/min/n/sh000001.gif?"+new Date());
+            
+        }
+
+        $(function () {
+
+
+            setInterval("getSH()",8000);
+
+
+            setInterval("getSHimg()",60000);
+            // getSH();
+            gtimg($("#shangzheng"), 'sh000001', '上证指数', v_sh000001.split('~'));
+            gtimg($("#shencheng"), 'sz399001', '深成指数', v_sz399001.split('~'));
+            gtimg($("#cyb"), 'sz399006', '创业板指', v_sz399006.split('~'));
+
+
+
+            setInterval("getSH()",8000);
+
+            //获取用户资金
+            // $.ajax({
+            //     url: "/user/account",
+            //     type: "POST",
+            //     dataType: "JSON",
+            //     data: JSON.stringify({userId: 1}),
+            //     success: function (res) {
+            //         // alert(JSON.stringify(res));
+            //         if (res.code == 0) {
+            //             // alert(JSON.stringify(res));
+            //             $("#capitalTotal").text("￥" + res.data.capitalTotal.toFixed(2));
+            //             $("#incomeAmount").text("￥" + res.data.incomeAmount.toFixed(2));
+            //             $("#investAmount").text("￥" + res.data.investAmount.toFixed(2));
+            //         } else {
+            //             alert(res.msg);
+            //         }
+            //         // alert(JSON.stringify(res));
+            //         return false;
+            //     }
+            // });
+
+            // var low = require('lowdb')
+            // var db = low('db.json')
+            // // db('posts').push({ title: 'lowdb is awesome'})
+            // db.set('info', {name: 'guo', desc: '前端工程师'}).write()
+        })
+
+        
+    </script>
+    <script>
+    // const path = require('path')
+    // const { app } = require('electron')
+    // var exePath = path.dirname(app.getPath('exe'));
+    // console.log('获取当前运行目录')
+    // console.log(exePath);
+
+    // 加载模块
+    const nedb = require('nedb');
+    // 实例化连接对象（不带参数默认为内存数据库）
+    const db = new nedb({
+    filename: './data/save.db',
+    autoload: true
+    });
+
+    //插入单项
+    // db.insert({
+    // name: 'tom'
+    // }, (err, ret) => {});
+
+    // 查询单项
+    db.findOne({
+    name: 'tom'
+    }, (err, ret) => {
+        console.log(ret);
+    });
+    </script>
+
+</div>
+
+</body>
+</html>
+
+
+
