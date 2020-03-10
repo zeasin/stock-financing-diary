@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>知</title>
+<link rel="stylesheet" href="/static/layui/css/layui.css">
+<script src="/static/layui/layui.js"></script>
+
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="/static/layui/jquerytypeahead.js"></script>
+<link rel="stylesheet" href="/static/layui/jquerytypeahead.css">
+
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue','PingFang SC','Microsoft YaHei','Source Han Sans SC','Noto Sans CJK SC','WenQuanYi Micro Hei',sans-serif;text-rendering:optimizeLegibility;line-height:1.2;color:#333}
+.Layout-navbarHolder div{display:flex;flex-direction:column;align-items:stretch;flex-shrink:0}
+.Input{flex:1;padding:0;overflow:hidden;font-family:inherit;font-size:inherit;font-weight:inherit;background:0 0;border:none;outline:0;resize:none}
+.Input-wrapper--multiline .Input{overflow:auto}
+.Input-wrapper{position:relative;display:flex;width:180px;height:34px;padding:4px 10px;font-size:14px;background:#FFF;border:1px solid #EBEBEB;border-radius:3px;box-sizing:border-box;transition:background .2s,border .2s}
+.Input-wrapper.Input-wrapper--multiline{height:inherit}
+
+.Layout-navbarHolder{height:59px}
+
+.Layout-navbarHolder .Navbar{contain:layout;flex-direction:row;align-items:center;justify-content:space-between;height:59px;width:100%;border-bottom:1px solid rgba(0,0,0,.08);color:grey;background:rgba(255,255,255,.97);will-change:transform;z-index:2;position:relative}
+.Layout-navbarHolder .Navbar-logo-wrapper{position:absolute;top:0;left:0;height:calc(59px - 1px);align-self:stretch;justify-content:center}
+.Layout-navbarHolder .Navbar-logo{flex-grow:1;display:flex;width:58px;align-items:center;justify-content:center;color:gray;transition:color 50ms ease-in-out; font-size:30px;}
+.Layout-navbarHolder .Navbar-title{margin:0 auto;width:660px;flex-direction:row;align-items:center;white-space:nowrap}
+.Layout-navbarHolder .Navbar-functionality{position:absolute;right:0;top:0;flex-direction:row;height:calc(59px - 1px);align-items:center;align-self:stretch}
+
+.Layout-navbarHolder .PublishPanel-wrapper{position:relative;float:right;padding:0 10px}
+.Layout-navbarHolder .zh_Button{width:82px;height:32px;line-height:30px;padding:0;cursor:default;background:#fff;opacity:.5;border:1px solid #b3b3b3;color:grey;border-radius:4px;text-align:center;font-size:14px;display:inline-block}
+
+.Layout-navbarHolder .WriteIndex-pageTitleWrapper{flex-direction:row;align-items:center}
+.Layout-navbarHolder .WriteIndex-pageTitle{font-weight:600;font-synthesis:style;color:#333;margin-right:20px}
+.Layout-navbarHolder .WriteIndex-pageSubTitle{color:#b3b3b3}
+
+.Layout-main{margin:47px auto 0;padding:0 0;max-width:660px;z-index:1}
+.WriteCover-wrapper{background:#f7f8f9;line-height:192px;color:grey;min-height:192px;text-align:center}
+.WriteCover-previewWrapper{height:100%;flex:1;justify-content:center;position:relative; background-position:center center; background-repeat:no-repeat; background-size:cover;}
+.UploadPicture-wrapper{cursor:pointer;display:block}
+.WriteCover-previewWrapper--empty::after{content:'添加题图';color:#b3b3b3;position:absolute;width:100%;text-align:center;left:0;bottom:64px;line-height:1;opacity:0;z-index:0;-webkit-transform:translateY(-12px);transform:translateY(-12px);transition:all .2s}
+.UploadPicture-input{display:none}
+
+.WriteCover-uploadIcon{font-size:42px;color:rgba(0,0,0,.2)}
+.WriteIndex-titleInput{margin:16px 0;border:0;padding:0;height:auto;width:100%;position:relative}textarea.Input{color:#1A1A1A}
+.WriteIndex-titleInput .Input{height:44px;min-height:44px;display:block;width:100%;border:0;font-size:32px;line-height:1.4;font-weight:600;font-synthesis:style;outline:0;box-shadow:none}
+
+.isy_edit { position:relative;}
+.wordMore{ position:absolute; right:10px; top:5px; z-index:9;}
+.wordHtml{ display:none; position:fixed; top:0; left:0; z-index:99; height:100%; width:100%; background:rgba(0,0,0,.4);}
+.wordHtml.upload_hover{ display:block;}
+.wordHtml .layui-upload-box{ background:#fff; position:absolute; top:0; bottom:0; left:0; right:0; margin:auto; padding-top:10px; max-width:400px; max-height:400px; text-align:center;}
+.wordHtml .layui-upload-box .layui_title{ font-size:18px; text-align:center; line-height:40px; color:#000;}
+.wordHtml .layui-upload-box .layui_contont{ margin-top:60px;}
+.wordHtml .layui-upload-box .layui_bottom{ position:absolute; bottom:0; width:100%; background:#f9f9f9; border-top:1px solid #f9f9f9; padding:10px 0; text-align:left;}
+.wordHtml .layui-upload-box .layui_bottom p{ padding:0 10px}
+.wordHtml .layui-icon-close{ position:absolute; right:10px; top:5px; font-size:20px; cursor:pointer;}
+
+/*新加的*/
+.Layout-main{ margin-top:20px;}
+.Layout-huanti{margin:20px auto 0;padding:0 0;max-width:660px;z-index:1; overflow:hidden;}
+.Layout-navbarHolder div.ht_container,
+.Layout-navbarHolder div.ht_container div{ flex-direction:row;}
+.Layout-navbarHolder div.ht_container{ padding-left:10px;}
+.ht_container{ line-height:30px; font-size:14px;}
+#type_select_value{ float:left;}
+#type_select_value li{ float:left; font-size:14px; padding-bottom:5px;}
+#type_select_value li span{ position:relative; min-width:80px; display:inline-block; border-radius:32px; background:#EDF0F0; border:1px solid #EDF0F0; color:#39F; text-align:center; padding:5px 5px; margin-right:5px;}
+#type_select_value li span em{ font-style:normal; line-height:27px; float:left; padding-left:5px;}
+#type_select_value li span i{ padding:0px 10px; font-size:20px; cursor:pointer; vertical-align:middle; font-style:normal;}
+#type_select_value li span i:hover{}
+#type_add{ cursor:pointer; float:left; padding:0 10px; color:#39F; font-weight:bold;}
+#form_search{ float:left; position:relative;} 
+#form_search .typeahead__field input{ border-radius:32px; border:1px solid #39F; background:#fff; padding:0 12px; width:180px; }
+#type_search{ position:absolute; right:0px; top:8px; cursor:pointer;}
+</style>
+</head>
+
+<body>
+	<div id="react-roo">
+    
+        <!--star header-->
+        <div class="Layout-navbarHolder">
+        	<div class="Navbar">
+                <div class="Navbar-logo-wrapper">
+                    <a class="Navbar-logo">股</a>
+                </div>
+                <div class="Navbar-title">
+                    <div class="WriteIndex-pageTitleWrapper">
+                        <div class="WriteIndex-pageTitle">写文章</div>
+                        <div class="WriteIndex-pageSubTitle">草稿已保存</div>
+                    </div>
+                    <!--star/*新加的*/-->
+                    <div class="ht_container">
+                        <div id="type_add" onClick="fnAddSearch()">+添加话题<span id="s_length"></span></div>
+                        <form id="form_search">
+                        <div class="typeahead__container">
+                            <div class="typeahead__field">
+                                <span class="typeahead__query">
+                                    <input class="js-typeahead" name="q" type="search" autofocus autocomplete="off" onkeydown='if(event.keyCode==13){fnSearch();}'>
+                                    <span id="type_search" title="添加" onClick="fnSearch()" class="typeahead__search-icon"></span>
+                                </span>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <!--end/*新加的*/-->
+                </div>
+                <div class="Navbar-functionality">
+                	<div class="PublishPanel-wrapper">
+                    	<button type="button" class="zh_Button">发布<i class="icon icon-ic_unfold"></i></button>
+                        <i class="WriteCover-uploadIcon icon-ic_phot_camera_alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end header-->
+        
+        <!--star/*新加的*/-->
+        <div class="Layout-huanti">
+            <ul id="type_select_value"></ul>
+        </div>
+        <!--end/*新加的*/-->
+        
+        <!--star 内容-->
+        <div class="Layout-main av-card">
+            <!--star上传图片-->
+        	<div class="WriteCover-wrapper">
+            	<div class="WriteCover-previewWrapper WriteCover-previewWrapper--empty" id="uploadImg">
+                	<label class="UploadPicture-wrapper">
+                        <i class="layui-icon layui-icon-camera WriteCover-uploadIcon icon-ic_phot_camera_alt"></i>
+                    </label>
+                </div>
+            </div>
+            <!--end上传图片-->
+            
+            <!--star标题-->
+            <div class="WriteIndex-titleInput Input-wrapper Input-wrapper--multiline">
+            <textarea rows="1" class="Input" placeholder="请输入标题（最多 50 个字）" style="height: 62px;"></textarea>
+            </div>
+            <!--end标题-->
+            
+            <!--star编辑器的代理-->
+            <div class="isy_edit">
+            	<textarea id="demo" style="display: none;"></textarea>
+                <div class="wordMore" id="L_layerTips"><i class="layui-icon layui-icon-more" style="font-size: 30px;"></i> </div>
+            </div>
+            <!--end编辑器的代理-->
+        </div>
+        <!--end 内容-->
+        
+        <!--star上传word-->
+        <div class="wordHtml" id="word_upload">
+            <div class="layui-upload-box">
+            	<div class="layui_title">文档导入<i class="layui-icon layui-icon-close" id="L_layerColosed"></i></div>
+                <div class="layui_contont">
+                    <div class="layui-upload-drag" id="_uploadword">
+                      <i class="layui-icon"></i>
+                      <p style="font-size:16px; color:#000;">选择要导入的文档</p>
+                      <div>文档最大5MB，支持doc，docx，md格式</div>
+                    </div>
+                </div>
+                <div class="layui_bottom"><p>若文档中存在编辑器所不支持的文本格式（例如表哥），将以纯文本展示<p></div>
+            </div>
+        </div>
+        <!--end上传word-->
+	</div>
+    <script>
+	layui.use('layer', function(){ //独立版的layer无需执行这一句
+  		var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+		$('#L_layerTips').on('click', function(){
+			$('#word_upload').addClass('upload_hover');
+		});
+		$('#L_layerColosed').on('click', function(){
+			$('#word_upload').removeClass('upload_hover');
+		})
+	})
+	layui.use('upload', function(){
+	  var upload = layui.upload;
+	   
+	  //执行实例
+	  var uploadInst = upload.render({
+		elem: '#uploadImg' //绑定元素
+		,url: '/upload/' //上传接口
+		,done: function(res){
+		  //上传完毕回调
+		  console.log(res)
+		}
+		,error: function(){
+		  //请求异常回调
+		  console.log(111)
+		}
+	  });
+
+	  //拖拽上传
+	  upload.render({
+		elem: '#_uploadword'
+		,url: '/upload/'
+		,done: function(res){
+		  console.log(res)
+		}
+	  });
+	});
+	layui.use('layedit', function(){
+	  var layedit = layui.layedit;
+	  layedit.build('demo'); //建立编辑器
+	});
+
+</script>
+
+<script>
+	//新加的
+    var data = {
+		"English": ["A","B","C","A001","A0031","A0301","C0041"],
+		'Chinese':["衡阳市","邵阳市","岳阳市","益阳市"]
+	};
+
+	typeof $.typeahead === 'function' && $.typeahead({
+		input: ".js-typeahead",
+		minLength: 1,
+		maxItem: 15,
+		order: "asc",
+		hint: true,
+		group: {
+			template: "{{group}} beers!"
+		},
+		maxItemPerGroup: 5,
+		backdrop: {
+			"background-color": "#fff"
+		},
+		href: "/beers/{{group}}/{{display}}/",
+		dropdownFilter: "all beers",
+		emptyTemplate: 'No result for "{{query}}"',
+		source: {
+			English: {
+				data: data.English
+			},
+			"Chinese wine":{
+				data:data.Chinese
+			}
+		},
+		callback: {
+			onClickAfter: function (node, a, item, event) {
+				event.preventDefault();
+			}
+		},
+		debug: true
+	});
+	function fnAddSearch(){
+		$('#type_add').hide();
+		$('#form_search').show();
+		$('.js-typeahead').focus();
+	}
+	function fnSearch(){
+		var i_v = $('.js-typeahead');
+		if(i_v.val() != ''){//01如果搜索框不等于空
+			var type = true;
+			var arr = [];
+			$('#type_select_value').find('li').each(function(){//02查找所有的li
+				var _this = $(this);
+				console.log(_this)
+				if(_this.length > 0){
+					for (var i = 0; i < _this.length; i++){
+						arr.push(_this[i].childNodes[0].childNodes[0].innerText);//03重组数组
+					}
+				}
+			});
+			for (var s = 0; s < arr.length; s++){//0循环已选中的li给true或false
+				//console.log(arr[s])
+				if(arr[s] == i_v.val()){//05如果li列表中有对应的值返回false不然就没有返回true
+					var type = false;
+				}else{
+					var type = true;
+				}
+			}
+			//console.log(arr)
+			if(type == true){//06判断如果为true可以再选中
+				var a = arr.length;
+				var b = "1";
+				var c = parseInt(a)+parseInt(b);
+				//console.log(c)
+				$('#type_select_value').append('<li><span><em>'+i_v.val()+'</em><i onClick="fn_clear(this)">×</i></span></li>');
+				$('#s_length').html(' ( '+ c +' ) ')
+				$('#type_add').show();
+				$('#form_search').hide();
+				i_v.val("");
+			}else{
+				i_v.focus();
+				console.log('has data');
+			}
+		}else{
+			i_v.focus();
+		}
+		
+	};
+	function fn_clear(e){
+		$(e).parent('span').parent('li').remove();
+		var lg = $('#type_select_value').find('li').length + 1;
+		if(lg > 1){
+			$('#s_length').text( (lg - 1) );
+		}else{
+			$('#s_length').text('');	
+		}
+	}
+
+    </script>
+</body>
+</html>

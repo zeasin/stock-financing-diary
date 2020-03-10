@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>首页-投资日记</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.bootcss.com/bulma/0.6.1/css/bulma.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f8f8;
+        }
+        .tag.is-lightblue {
+            color: #2d84cc;
+            background: #ebf3fb;
+        }
+        .ml-10 {
+            margin-left: 1rem;
+        }
+        .lh-20 {
+            line-height: 2rem;
+        }
+        .card {
+            margin-bottom: 1rem;
+        }
+        .section {
+            padding-top: 1rem;
+        }
+        .fa-15 {
+            font-size: 1.5rem;
+        }
+        .fa.fa-fire {
+            font-size: 1.2rem;
+            color: red;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body >
+        <div class="navbar has-shadow">
+                <div class="container">
+                    <div class="navbar-menu">
+                        <div class="navbar-start">
+                            <a class="navbar-item" href="./index.html">首页</a>
+                            <a class="navbar-item" href="stock_list.html">自选股</a>
+                            <a class="navbar-item" href="/invest/list">持仓</a>
+            
+                            <div class="navbar-item">
+                                <form action="./article_add.html" method="get" >
+                                    <div class="field is-grouped">
+            
+                                        <div class="control has-icons-right">
+                                            <input type="text" class="input" name="title" style="width: 20rem;" placeholder="搜索你感兴趣的内容...">
+                                            <span class="icon is-right">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                        </div>
+                                        <div class="control">
+                                            <input type="submit" class="button is-info" value="写心得">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="navbar-item">
+                                <div class="control">
+                                    <a class="button is-info" href="/article/add_url" target="_blank">写摘抄</a>
+                                </div>
+                            </div>
+                            <div class="navbar-item">
+                                <div class="control">
+                                    <a class="button is-info" href="/stock/add" target="_blank">添加自选股</a>
+                                </div>
+                            </div>
+                            <div class="navbar-item">
+                                <div class="control">
+                                <a class="button is-info" href="/invest/add" target="_blank">买入股票</a>
+                                </div>
+            
+                            </div>
+                            <div class="navbar-item">
+                                <div class="control">
+                                    <a class="button is-info" href="/invest/sell" target="_blank">卖出股票</a>
+                                </div>
+            
+                            </div>
+                        </div>
+                        <div class="navbar-end">
+                            <a href="#" class="navbar-item">
+                                <i class="fa fa-15 fa-bell"></i>
+                            </a>
+                            <a href="#" class="navbar-item">
+                                <i class="fa fa-15 fa-comments"></i>
+                            </a>
+                            <a href="#" class="navbar-item">
+                                <img src="https://bulma.io/images/placeholders/128x128.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<div class="contain_content">
+    <link rel="stylesheet" href="./static/layui/css/layui.css" media="all">
+    <div class="section">
+        <div class="container">
+            <div class="tile">
+                <div class="tile is-vertical is-parent">
+                    <div class="box">
+                        <div class="media">
+                            <blockquote class="layui-elem-quote layui-text">
+                                股票投资记录，时间久了，这就是你的大数据。1. <a href="stock_list.html">查看我的自选股</a>
+                            </blockquote>
+                        </div>
+
+                    </div>
+                    <div class="box">
+                        <div class="layui-form-item">
+
+                            <label class="layui-form-label" style="width: 120px;">股票代码</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="code" id="code" lay-verify="required|number" maxlength="6"
+                                       placeholder="请输入股票代码" autocomplete="off" class="layui-input">
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label" style="width: 120px;">行业板块</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="plate" id="plate" maxlength="50" style="width: 70%"
+                                       lay-verify="required" placeholder="请填写行业板块信息" autocomplete="off"
+                                       class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label" style="width: 120px;">备注</label>
+                            <div class="layui-input-block">
+                            <textarea placeholder="请输入内容" name="comment" id="comment" maxlength="100" style="width: 70%"
+                                      class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" id="submit" lay-filter="demo1">立即提交</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+        <script src="./static/layui/layui.js" charset="utf-8"></script>
+        <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+        <script>
+            layui.use(['form', 'layedit', 'laydate', 'jquery'], function () {
+                var form = layui.form
+                    , layer = layui.layer
+                    , layedit = layui.layedit
+                    , $ = layui.jquery
+                    , laydate = layui.laydate;
+
+
+                $(function () {
+                    $("#submit").click(function () {
+                        let code = $("#code").val();
+                        let name = '';
+                        let price = 0.00;
+                        let plate = $("#plate").val();
+                        let comment = $("#comment").val();
+                        // alert(code.length)
+                        if (code == '' || code.length != 6) {
+                            alert("请填写正确的股票代码");
+                            return;
+                        }
+                        let market = 'SS';
+                        let marketIndex = 0;
+                        //600,601，603沪市主板SS 
+                        //688科创板SS
+                        //000,002深市主板SZ
+                        //300创业板SZ
+                        if(code.startsWith('600') || code.startsWith('601') || code.startsWith('603') || code.startsWith('688') ){
+                            market = 'SS'
+                            marketIndex = 0
+                        }else if(code.startsWith('000') || code.startsWith('002') || code.startsWith('300') ){
+                            market = 'SZ'
+                            marketIndex = 1
+                        }else{
+                            alert("股票代码错误");
+                            return;
+                        }
+
+                        //组合请求网易接口的code，深1沪0
+
+
+                        const axios = require('axios');
+                        axios.get('http://img1.money.126.net/data/hs/time/today/'+marketIndex+code+'.json')
+                        .then(function (response) {
+                            if(response.status == 200){
+                                name = response.data.name;
+                                price = response.data.yestclose;
+                                var date = response.data.date;
+                                var lastVolume = response.data.lastVolume;
+                                console.log(response.data)
+                                let str = {code:code,name:name,price:price,market:market,plate:plate,comment:comment,date:date,lastVolume:lastVolume};
+                                const ipc = require('electron').ipcRenderer
+                                ipc.send('addStock',str);
+                            }
+                            // console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+
+                        
+                        
+                        
+                    })
+                })
+
+                //监听提交
+                // form.on('submit(demo1)', function(data){
+                //     layer.alert(JSON.stringify(data.field), {
+                //         title: '最终的提交信息'
+                //     })
+                //     return true;
+                // });
+
+            });
+        </script>
+</div>
+</body>
+</html>

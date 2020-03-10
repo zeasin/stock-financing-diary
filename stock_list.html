@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style class="vjs-styles-defaults">
+        .video-js {
+            width: 300px;
+            height: 150px;
+        }
+
+        .vjs-fluid {
+            padding-top: 56.25%
+        }
+    </style>
+    <meta data-n-head="true" name="referrer" content="always"><meta data-n-head="true" name="renderer" content="webkit"><meta data-n-head="true" name="force-rendering" content="webkit"><meta data-n-head="true" name="baidu-site-verification" content="GFgkG2X61Y"><meta data-n-head="true" http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"><meta data-n-head="true" charset="utf-8"><meta data-n-head="true" name="viewport" content="width=device-width, initial-scale=1">
+    <meta data-n-head="true" data-hid="description" name="description" content="选股宝，一款主打“主题投资”的A股资讯神器，每日根据用户个性化关注主题，推送最新、最快、最狠的消息，帮助第一时间抓住机会。">
+    <meta data-n-head="true" data-hid="keywords" name="keywords" content="选股宝,xuangubao.cn,主题投资,资讯,股票,板块,题材,产业链,主题库,今日机会,中长线机会,近期风口,提前埋伏">
+    <title data-n-head="true">我的自选股</title>
+    <link data-n-head="true" rel="icon" type="image/x-icon" href="https://image.xuangubao.cn/pc/images/logo.png">
+    <link data-n-head="true" rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_117096_nbjebjkmw7p.css">
+    <link data-n-head="true" rel="stylesheet" type="text/css" href="https://xuangubao.cn/css/minireset.min.css">
+    <!--头部css-->
+    <link href="https://cdn.bootcss.com/bulma/0.6.1/css/bulma.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar has-shadow">
+        <div class="container">
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="./index.html">首页</a>
+                    <a class="navbar-item" href="stock_list.html">自选股</a>
+                    <a class="navbar-item" href="/invest/list">持仓</a>
+    
+                    <div class="navbar-item">
+                        <form action="./article_add.html" method="get" >
+                            <div class="field is-grouped">
+    
+                                <div class="control has-icons-right">
+                                    <input type="text" class="input" name="title" style="width: 20rem;" placeholder="搜索你感兴趣的内容...">
+                                    <span class="icon is-right">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                                </div>
+                                <div class="control">
+                                    <input type="submit" class="button is-info" value="写心得">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="navbar-item">
+                        <div class="control">
+                            <a class="button is-info" href="/article/add_url" target="_blank">写摘抄</a>
+                        </div>
+                    </div>
+                    <div class="navbar-item">
+                        <div class="control">
+                            <a class="button is-info" href="/stock/add" target="_blank">添加自选股</a>
+                        </div>
+                    </div>
+                    <div class="navbar-item">
+                        <div class="control">
+                        <a class="button is-info" href="/invest/add" target="_blank">买入股票</a>
+                        </div>
+    
+                    </div>
+                    <div class="navbar-item">
+                        <div class="control">
+                            <a class="button is-info" href="/invest/sell" target="_blank">卖出股票</a>
+                        </div>
+    
+                    </div>
+                </div>
+                <div class="navbar-end">
+                    <a href="#" class="navbar-item">
+                        <i class="fa fa-15 fa-bell"></i>
+                    </a>
+                    <a href="#" class="navbar-item">
+                        <i class="fa fa-15 fa-comments"></i>
+                    </a>
+                    <a href="#" class="navbar-item">
+                        <img src="https://bulma.io/images/placeholders/128x128.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div id="nuxt-layout-container" style="padding-left:100px;">
+    <div class="stocklist-main">
+        <div class="stocklist-pool">
+            <div data-v-e5a98d34="">
+                <div data-v-e5a98d34="" class="stocklist-pool-main">
+                    <table data-v-e5a98d34="" class="stocklist-pool-table" style="margin-top: 0px;">
+                        <colgroup data-v-e5a98d34="">
+                            <col data-v-e5a98d34="" style="width: 500px;">
+                            <col data-v-e5a98d34="" style="width: 90px;">
+                            <col data-v-e5a98d34="" style="width: 90px;">
+                            <col data-v-e5a98d34="" style="width: 90px;">
+                            <col data-v-e5a98d34="" style="width: 90px;">
+                            <col data-v-e5a98d34="" style="width: 90px;">
+                            <col data-v-e5a98d34="" style="width: 90px;">
+                            <col data-v-e5a98d34="" style="width: 90px;">
+                            <col data-v-e5a98d34="" style="width: 70px;">
+                        </colgroup>
+                        <thead data-v-e5a98d34="" class="stocklist-pool-thead">
+                        <tr data-v-e5a98d34="">
+                            <th data-v-e5a98d34="" class="stocklist-pool-th stocklist-pool-th-reason"
+                                style="width: 500px;">
+                                股票名称
+                            </th>
+                            <th data-v-a5b1c7d4="" data-v-e5a98d34="" class="" style="width: 90px;"><span
+                                    data-v-a5b1c7d4="">最新价</span><span data-v-a5b1c7d4="" class="arrow-container"><i
+                                    data-v-a5b1c7d4="" class="iconfont"></i></span></th>
+                            <th data-v-a5b1c7d4="" data-v-e5a98d34="" class="sorting" style="width: 90px;"><span
+                                    data-v-a5b1c7d4="">涨跌幅</span><span data-v-a5b1c7d4="" class="arrow-container"><i
+                                    data-v-a5b1c7d4="" class="iconfont icon-desc"></i></span></th>
+                            <th data-v-a5b1c7d4="" data-v-e5a98d34="" class="" style="width: 90px;"><span
+                                    data-v-a5b1c7d4="">换手率</span><span data-v-a5b1c7d4="" class="arrow-container"><i
+                                    data-v-a5b1c7d4="" class="iconfont"></i></span></th>
+                            <th data-v-a5b1c7d4="" data-v-e5a98d34="" class="" style="width: 90px;"><span
+                                    data-v-a5b1c7d4="">流通市值</span><span data-v-a5b1c7d4="" class="arrow-container"><i
+                                    data-v-a5b1c7d4="" class="iconfont"></i></span></th>
+                            <th data-v-a5b1c7d4="" data-v-e5a98d34="" class="" style="width: 90px;"><span
+                                    data-v-a5b1c7d4="">总市值</span><span data-v-a5b1c7d4="" class="arrow-container"><i
+                                    data-v-a5b1c7d4="" class="iconfont"></i></span></th>
+                            <th data-v-a5b1c7d4="" data-v-e5a98d34="" class="" style="width: 90px;"><span
+                                    data-v-a5b1c7d4="">市盈率</span><span data-v-a5b1c7d4="" class="arrow-container"><i
+                                    data-v-a5b1c7d4="" class="iconfont"></i></span></th>
+                            <th data-v-a5b1c7d4="" data-v-e5a98d34="" class="" style="width: 90px;">
+                                <span data-v-a5b1c7d4="">持股数</span><span data-v-a5b1c7d4="" class="arrow-container">
+                                <!--<i data-v-a5b1c7d4="" class="iconfont"></i>-->
+                                </span>
+                            </th>
+                            <th data-v-e5a98d34="" class="stocklist-pool-th stocklist-pool-th-diejia" style="width: 70px;">
+                                <span data-v-a5b1c7d4="">均价</span>
+                            </th>
+                            <th data-v-e5a98d34="" class="stocklist-pool-th stocklist-pool-th-diejia" style="width: 70px;">
+                                <span data-v-a5b1c7d4="">盈利</span>
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody data-v-e5a98d34="">
+                        <tr data-v-8a7c16ee="" data-v-e5a98d34="" class="stockitem-tbody-tr stock_600003">
+                            <td data-v-8a7c16ee="" class="desc-td">
+                                <a data-v-8a7c16ee="" class="desc-main">
+                                    <span data-v-8a7c16ee=""  class="desc-name">华泰股份</span>
+                                    <span data-v-8a7c16ee="" class="desc-symbol">600308</span>
+
+                                </a>
+                                <div data-v-8a7c16ee="" class="desc-image-container blocked" >addd</div>
+                            </td>
+                            <td data-v-8a7c16ee="" class="td-center"><span data-v-8a7c16ee="" class="">--</span></td>
+                            <td data-v-8a7c16ee="" class="td-center sort-target"><span data-v-8a7c16ee="" class="-market-color--rise">--</span></td>
+                            <td data-v-8a7c16ee="" class="td-center">--</td>
+                            <td data-v-8a7c16ee="" class="td-center">--</td>
+                            <td data-v-8a7c16ee="" class="td-center">--</td>
+                            <td data-v-8a7c16ee="" class="td-center">--</td>
+                            <td data-v-8a7c16ee="" class="td-center td-flow" th:attr="quantity=${item.quantity}">
+                                <span data-v-8a7c16ee="" class="-market-color--rise" th:text="${item.quantity}"></span>
+
+                        </td>
+                            <td data-v-8a7c16ee="" class="diejia" th:attr="avg_price=${item.avgPrice}">
+                                <span data-v-8a7c16ee="" th:text="${item.avgPrice}"><!----><i data-v-8a7c16ee="" class="iconfont"></i></span>
+                            </td>
+                            <td data-v-8a7c16ee="" class="diejia">
+                                <span data-v-8a7c16ee="" class="-market-color--rise"></span>
+                            </td>
+                            <td>
+                                <a th:href="${'http://stockpage.10jqka.com.cn/'+item.code}" target="_blank">基本面</a>
+                                <a th:href="${'/stock/analyse?code='+item.code}" target="_blank">股票分析</a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table><!----><!----><!----></div><!----><!----></div>
+        </div><!----><!----></div>
+
+    <script src="https://img.highcharts.com.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script>
+        const Datastore = require('nedb')
+        const stockDb = new Datastore({
+        filename: './data/stock.db',
+        autoload: true
+        });
+        stockDb.find({}, function (err, docs) {
+            console.log(docs)
+        });
+    </script>
+    <script>
+        var code = '600003.SS';
+        var stockPriceUrl = 'https://flash-api.xuangubao.cn/api/stock/data?symbols='+code+'&fields=symbol,stock_chi_name,change_percent,price,turnover_ratio,non_restricted_capital,total_capital,per,limit_up_days,last_limit_up,limit_status,nearly_new_acc_pcp,pe_rate&strict=true'
+        var stockLabesUrl = 'https://flash-api.xuangubao.cn/api/stock_label/labels?symbols='+code;
+            $(function () {
+                $.ajax({
+                    url:stockLabesUrl,
+                    type:"get",
+                    success:function(res) {
+                        // console.log(res);
+                        if (res.code == 20000) {
+                            $.each(res.data, function (i, r) {
+                                var obj = $(".stock_" + i.substr(0, 6)).children("td");
+                                var stockData = r;
+                                for(var i=0; i<stockData.length;i++) {
+                                    var html = '<span data-v-8a7c16ee="">\n' +
+                                        '<span data-v-8a7c16ee="" aria-label="'+stockData[i].description+'" class="desc-label hint--bottom hint--large -market-color--rise">'+stockData[i].label_name+'</span>\n' +
+                                        '</span>';
+                                   $(obj[0]).find("a").append(html);
+                                }
+                            });
+                        }
+                    }
+            });
+                $.ajax({
+                    url:stockPriceUrl,
+                    type:"get",
+                    success:function(res){
+                        console.log(res);
+                        if(res.code==20000){
+                            $.each(res.data,function (i,r) {
+                                var obj = $(".stock_"+i.substr(0,6)).children("td");
+                                var stockData = r;
+                                console.log(stockData);
+                                // console.log(obj);
+
+                                var price = $(obj)[1];//现价
+                                var pxChange = $(obj)[2];//涨跌幅
+                                var huanshou = $(obj)[3];//换手率
+                                var ltsz = $(obj)[4];//流通市值
+                                var zsz = $(obj)[5];//总市值
+                                var syl = $(obj)[6];//市盈率
+                                var quantity = $($(obj)[7]).attr('quantity');//持股数量
+                                var avg_price = $($(obj)[8]).attr('avg_price');//均价
+
+                                var px_change = stockData.change_percent * 100; //涨跌
+                                var px_price = stockData.price;//现价
+                                // console.log(px_change);
+                                // console.log(px_price);
+                                if(px_change>0){
+                                    //涨
+                                    $(price).children("span").text(px_price.toFixed(2));
+                                    $(price).children("span").removeClass("-market-color--decline");
+                                    $(price).children("span").addClass("-market-color--rise");
+
+                                    $(pxChange).children("span").text(px_change.toFixed(2)+"%");
+                                    $(pxChange).children("span").removeClass("-market-color--decline");
+                                    $(pxChange).children("span").addClass("-market-color--rise");
+
+                                }else{
+                                    //跌
+                                    $(price).children("span").text(px_price.toFixed(2));
+                                    $(price).children("span").addClass("-market-color--decline");
+                                    $(price).children("span").removeClass("-market-color--rise");
+
+                                    $(pxChange).children("span").text(px_change.toFixed(2)+"%");
+                                    $(pxChange).children("span").addClass("-market-color--decline");
+                                    $(pxChange).children("span").removeClass("-market-color--rise");
+                                }
+
+                                $(huanshou).text((stockData.turnover_ratio * 100).toFixed(2)+"%");
+                                var zszMoney = stockData.total_capital;
+                                var ltszMoney = stockData.non_restricted_capital;
+                                $(ltsz).text((ltszMoney/100000000).toFixed(1)+"亿");
+                                $(zsz).text((zszMoney/100000000).toFixed(1)+"亿");
+                                // $(syl).text(r[9].toFixed(2));
+                                //
+                                if(quantity > 0 && avg_price > 0){
+
+                                    //计算盈利=（现价-均价）* 数量
+                                    var profix = (px_price - avg_price) * quantity;
+                                    // console.log(profix)
+                                    // alert(quantity);
+                                    // alert(avg_price);
+                                    var p = $($(obj)[9]).children("span");
+                                    // console.log(p)
+                                    var pp = (profix / (avg_price * quantity))*100;
+                                    if(profix>0){
+                                        //涨
+                                        $($(obj)[9]).children("span").text( profix.toFixed(2) +"  "+ pp.toFixed(2)+"%");
+                                        $($(obj)[9]).children("span").removeClass("-market-color--decline");
+                                        $($(obj)[9]).children("span").addClass("-market-color--rise");
+                                    }else{
+                                        //跌
+                                        $($(obj)[9]).children("span").text(profix.toFixed(2) +"  "+ pp.toFixed(2)+"%");
+                                        $($(obj)[9]).children("span").addClass("-market-color--decline");
+                                        $($(obj)[9]).children("span").removeClass("-market-color--rise");
+                                    }
+                                }
+                                // console.log(obj)
+
+
+                                // console.log($(obj).find("td")[1]);
+                            })
+                            // alert("获取成功");
+                            // $(".stockitem-tbody-tr").each(function(i,s){
+                            //     console.log(i);
+                            //     console.log(s);
+                            // })
+                            // }
+
+                        }
+                    }
+
+                })
+            })
+
+    </script>
+
+</div>
+</body>
+</html>
